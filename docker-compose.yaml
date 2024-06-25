@@ -13,6 +13,17 @@ services:
     networks:
       - first-network
 
+  api-rocket:
+    build:
+      context: .
+    container_name: api-rocket
+    ports:
+      - 3001:3000
+    depends_on:
+      - mysql
+    networks:
+      - first-network
+
 networks:
   first-network:
     driver: bridge
