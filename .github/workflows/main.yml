@@ -37,4 +37,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: gabriel0611api-rocket:${{ steps.generate_tag.outputs.sha }},gabriel0611api-rocket:latest
+          tags: gabriel0611/api-rocket:${{ steps.generate_tag.outputs.sha }},gabriel0611/api-rocket:latest
