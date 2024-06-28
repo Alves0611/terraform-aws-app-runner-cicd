@@ -4,8 +4,7 @@ resource "aws_iam_openid_connect_provider" "this" {
   thumbprint_list = ["1b511abead59c6ce207077c0bf0e0043b1382612"]
 }
 
-
-resource "aws_iam_role" "test_role" {
+resource "aws_iam_role" "ecr_role" {
   name = "github-actions-ecr-role"
 
   assume_role_policy = jsonencode({
@@ -30,4 +29,27 @@ resource "aws_iam_role" "test_role" {
       }
     ]
   })
+
+  inline_policy {
+    name = "ecr-app-permissions"
+    policy = jsonencode({
+      Statement = [
+        {
+          Sid = "Statement1"
+          Action = [
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:BatchGetImage",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:PutImage",
+            "ecr:InitiateLayerUpload",
+            "ecr:UploadLayerPart",
+            "ecr:CompleteLayerUpload",
+            "ecr:GetAuthorizationToken",
+          ]
+          Effect   = "Allow"
+          Resource = "*"
+        }
+      ]
+    })
+  }
 }
