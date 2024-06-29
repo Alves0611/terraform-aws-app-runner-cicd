@@ -4,6 +4,26 @@ resource "aws_iam_openid_connect_provider" "this" {
   thumbprint_list = ["1b511abead59c6ce207077c0bf0e0043b1382612"]
 }
 
+resource "aws_iam_role" "app-runner-role" {
+  name = "app-runner-role"
+
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "build.apprunner.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  ]
+}
+
 resource "aws_iam_role" "ecr_role" {
   name = "github-actions-ecr-role"
 
@@ -33,9 +53,24 @@ resource "aws_iam_role" "ecr_role" {
   inline_policy {
     name = "ecr-app-permissions"
     policy = jsonencode({
+      Version = "2012-10-17"
       Statement = [
         {
-          Sid = "Statement1"
+          Sid      = "Statement1"
+          Action   = "apprunner:*"
+          Effect   = "Allow"
+          Resource = "*"
+          }, {
+          Sid = "Statement2"
+          Action = [
+            "iam:PassRole",
+            "iam:CreateServiceLinkedRole"
+          ]
+          Effect   = "Allow"
+          Resource = "*"
+        },
+        {
+          Sid = "Statement3"
           Action = [
             "ecr:GetDownloadUrlForLayer",
             "ecr:BatchGetImage",
@@ -44,7 +79,7 @@ resource "aws_iam_role" "ecr_role" {
             "ecr:InitiateLayerUpload",
             "ecr:UploadLayerPart",
             "ecr:CompleteLayerUpload",
-            "ecr:GetAuthorizationToken",
+            "ecr:GetAuthorizationToken"
           ]
           Effect   = "Allow"
           Resource = "*"
