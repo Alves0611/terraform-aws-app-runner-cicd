@@ -46,7 +46,8 @@ jobs:
           TAG: ${{ steps.generate_tag.outputs.sha }}
         run: |
           docker build -t $REGISTRY/rocketseat:$TAG .
-          docker push $REGISTRY/rocketseat:$TAG
+          docker tag -t $REGISTRY/rocketseat:$TAG $REGISTRY/rocketseat:latest
+          docker push $REGISTRY/rocketseat:latest
           IMAGE=$(echo $REGISTRY/rocketseat:$TAG)
           echo "image=$IMAGE" >> $GITHUB_OUTPUT
 
@@ -62,3 +63,6 @@ jobs:
           memory: 2
           port: 3000
           wait-for-service-stability-seconds: 180
+
+      - name: App Runner check
+        run: echo "App Runner running... ${{ steps.deploy-app-runner.outputs.service-url }}"
