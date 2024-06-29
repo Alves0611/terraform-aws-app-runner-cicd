@@ -32,8 +32,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::891377404175:role/github-actions-ecr-role
-          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_LOGIN_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -55,10 +55,10 @@ jobs:
         id: deploy-app-runner
         uses: awslabs/amazon-app-runner-deploy@main
         with:
-          service: api-rocket
+          service: ${{ vars.SERVICE_NAME }}
           image: ${{ steps.build-docker-image.outputs.image }}
-          access-role-arn: arn:aws:iam::891377404175:role/app-runner-role
-          region: us-east-1
+          access-role-arn: ${{ secrets.AWS_APP_RUNNER_ROLE }}
+          region: ${{ secrets.AWS_REGION }}
           cpu: 1
           memory: 2
           port: 3000
