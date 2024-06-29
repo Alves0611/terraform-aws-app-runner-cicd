@@ -1,4 +1,4 @@
-FROM node:18-alpine3.19 AS build
+FROM node:18 AS build
 
 WORKDIR /usr/src/app
 
@@ -8,8 +8,6 @@ COPY .yarn ./.yarn
 RUN yarn install
 
 COPY . .
-
-RUN yarn global add @nestjs/cli
 
 RUN yarn run build
 
@@ -25,4 +23,4 @@ COPY --from=build /usr/src/app/node_modules ./node_modules
 
 EXPOSE 3000
 
-CMD ["yarn", "run", "start"]
+CMD ["node", "dist/main"]
