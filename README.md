@@ -6,7 +6,7 @@ This project aims to demonstrate the configuration and deployment of an applicat
 
 ## Project Overview
 
-![AWS Static Website Architecture](./image/rocketseat.drawio%20.svg)
+![](./image/rocketseat.drawio%20.svg)
 
 
 
@@ -19,8 +19,8 @@ This project aims to demonstrate the configuration and deployment of an applicat
 ## Certificates
 
 <p align="center">
-  <img src="./image/certificate_devops.png" alt="certificate Cultura DevOps" width="390"/>
-  <img src="./image/certificate_docker.png" alt="certificate Docker" width="390"/>
-  <img src="./image/certificate_terraform.png" alt="certificate Terraform" width="390"/>
-  <img src="./image/certificate_cicd.png" alt="certificate CI/CD" width="390"/>
+  <img src="./image/certificate_devops.png" alt="" width="390"/>
+  <img src="./image/certificate_docker.png" alt="" width="390"/>
+  <img src="./image/certificate_terraform.png" alt="" width="390"/>
+  <img src="./image/certificate_cicd.png" alt="" width="390"/>
 </p>
