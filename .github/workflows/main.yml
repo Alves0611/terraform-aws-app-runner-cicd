@@ -46,7 +46,7 @@ jobs:
           TAG: ${{ steps.generate_tag.outputs.sha }}
         run: |
           docker build -t $REGISTRY/rocketseat:$TAG .
-          docker tag -t $REGISTRY/rocketseat:$TAG $REGISTRY/rocketseat:latest
+          docker tag $REGISTRY/rocketseat:$TAG $REGISTRY/rocketseat:latest
           docker push $REGISTRY/rocketseat:latest
           IMAGE=$(echo $REGISTRY/rocketseat:$TAG)
           echo "image=$IMAGE" >> $GITHUB_OUTPUT
